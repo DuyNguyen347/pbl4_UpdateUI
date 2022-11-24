@@ -1,23 +1,22 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 480,
-    height: 680,
+    height: 720,
     x: 1600,
     y:0,
     transparent: true,
-    // frame: false,
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration:true,
       contextIsolation:false,
     }
   })
-
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 
@@ -41,8 +40,11 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
+  console.log("main.js line 43")
   if (process.platform !== 'darwin') app.quit()
 })
-
+ipcMain.on("window-all-closed", function () {
+  app.quit()
+})
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

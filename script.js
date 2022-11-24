@@ -1,9 +1,4 @@
-import {getStateNightLight, turnOnNightLight,turnOffNightLight,getStateAirplaneMode,turnOnAirplaneMode,turnOffAirplaneMode, getStateBluetooth, getStateWifi, getValueVolume, setValueVolum, turnOffBluetooth, turnOffWifi, turnOnBluetooth, turnOnWifi,login, getValueBright, setValueBright } from './execshell.js';
-// const brightness = document.getElementById("brightness");
-// const volumeIcon = document.getElementById("volumeIcon");
-// const wrapBluetooth = document.getElementsByClassName("wrap-bluetooth")[0];
-// const bluetoothCheckbox = document.getElementById("bluetoothCheckbox");
-// const wrapWifi = document.getElementsByClassName("wrap-wifi")[0];
+import { checkLogin, getStateAirplaneMode, getStateBluetooth, getStateNightLight, getStateWifi, getValueBright, getValueVolume, login, setValueBright, setValueVolum, turnOffBluetooth, turnOffNightLight, turnOffWifi, turnOnAirplaneMode, turnOnBluetooth, turnOnNightLight, turnOnWifi } from './execshell.js';
 const volume = document.getElementById("volume");
 const wifiCheckbox = document.getElementById("wifiCheckbox");
 const wifiButton = document.getElementById("wifiButton");
@@ -24,6 +19,11 @@ const keyboardCheckbox = document.getElementById("keyboardCheckbox");
 const doNotDisturbButton = document.getElementById("doNotDisturbButton");
 const doNotDisturbCheckbox = document.getElementById("doNotDisturbCheckbox");
 const brightness = document.getElementById("brightness");
+const password = document.getElementById("password");
+const BtnLogin = document.getElementById("button-submit");
+const BtnCancel = document.getElementById("button-cancel");
+const BtnExit = document.getElementById("btn-exit");
+const formLogin = document.getElementsByClassName("containner-login")[0];
   volume.oninput = ()=>{  
     if(volume.value>=90){
       volumeIcon.setAttribute("src","./img/volume-high-outline.svg")
@@ -218,11 +218,25 @@ doNotDisturbButton.onclick = function(){
     img.setAttribute("src","./img/notification-off.png");
   }
 }
+BtnCancel.onclick = function () { 
+  window.closeWindow();
+}
+BtnExit.onclick = function () {
+  window.closeWindow();
+}
+BtnLogin.onclick = function(){
+  login(password.value);
+  if (checkLogin()) {
+    formLogin.classList.add("hide");
+    demo();
+  }
+}
 
 window.onload = function () {
-  const password = "1611";
-  login(password);
-  demo();
+  if (checkLogin()) {
+    formLogin.classList.add("hide");
+    demo();
+    }
 }
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -238,8 +252,8 @@ async function demo() {
     nightLightCheckbox.checked = await getStateNightLight();
     
     // set
-    // await brightness.oninput();
-    // await volume.oninput();
+    await brightness.oninput();
+    await volume.oninput();
     await bluetoothCheckbox.onchange();
     await wifiCheckbox.onchange();
     await airplaneCheckbox.onchange();
@@ -248,7 +262,3 @@ async function demo() {
     await sleep(5);
     }
 }
-
-  
-    
-    
