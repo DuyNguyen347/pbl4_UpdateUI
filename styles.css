@@ -1,4 +1,5 @@
 * {
+    user-select: none;
     margin: 0;
     padding: 0;
     /* box-sizing: border-box; */
@@ -262,4 +263,73 @@ body {
             #90dcf5,
             #e0ebfc)!important;
     box-shadow: 0 4px 15px 0 rgba(231, 237, 247, 0.75)!important;
+}
+
+
+
+.containner-login{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+.form-login {
+    width: 90%;
+    height: 40%;
+    /* background: #3f86ed; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+    background: white;
+}
+.form-login .user{
+    font-size: 150px;
+}
+.form-login .input input{
+    padding: 4px 12px;
+    font-size: 16px;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: rgb(206, 206, 206);
+}
+.button-login{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.button-login button {    
+    width: 48%;
+    height: 40px;
+    background: white;
+    border: none;
+    cursor: pointer;
+}
+.button-login button:hover{
+    background: rgb(240, 240, 240);
+}
+.hide {
+    display: none;
+}
+.wrap-btn-exit{
+    position: fixed;
+    top: 24px;
+    right: 12px;
+}
+.wrap-btn-exit button{
+    cursor: pointer;
+    border: none;
+}
+.wrap-btn-exit button img{
+    width: 30px;
+    height: 30px;
+}
+.wrap-btn-exit button img:hover{
+    background: rgba(0, 0, 0, 0.1);
 }
