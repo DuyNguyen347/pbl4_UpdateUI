@@ -5,6 +5,14 @@ export const login = (password) => {
     } catch (error) {
     }
 }
+export const checkLogin = () => {
+    try {
+        const max = execSync("sudo -n true", { encoding: "utf-8" });
+    } catch (error) {
+        return false;
+    }
+    return true;
+}
 export const turnOnBluetooth = ()=>{
   execSync("rfkill unblock bluetooth");
 }
