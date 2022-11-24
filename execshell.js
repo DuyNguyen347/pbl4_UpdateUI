@@ -85,3 +85,56 @@ export const getStateMicro = () => {
 export const toggleMicro = () => {
     execSync("amixer -D pulse sset Capture toggle");
 }
+export const getStateTouchpad = () => {
+
+}
+export const turnOnTouchpad = () => {
+    execSync("gsettings set org.gnome.desktop.peripherals.touchpad send-events enabled")
+}
+export const turnOffTouchpad = () => {
+    execSync("gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled")
+}
+export const lockScreen = () => {
+    execSync("xdg-screensaver lock")
+}
+export const suspend = () => {
+    execSync("systemctl suspend")
+}
+export const turnOff = () => {
+    execSync("sudo poweroff");
+}
+export const restart = () => {
+    execSync("sudo reboot");
+}
+// them
+export const getStateDoNotDisturb = () => {
+    const output = execSync("gsettings get org.gnome.desktop.notifications show-banners",{encoding: 'utf-8' });
+    if (output.includes("yes"))
+        return true;
+    return false;
+}
+
+export const turnOnDoNotDisturb = () => {
+    execSync("gsettings set org.gnome.desktop.notifications show-banners true");
+}
+
+export const turnOffDoNotDisturb = () => {
+    execSync("gsettings set org.gnome.desktop.notifications show-banners false");
+}
+export const openSetting = () => {
+    execSync("gnome-control-center");
+}
+
+//them
+export const getStateWebcam = () => {
+    const output = execSync("Check state of webcam : ls -ltrh /dev/video*",{encoding: 'utf-8' });
+    if (output.includes("yes"))
+        return true;
+    return false;
+}
+export const turnOnWebcam = () => {
+    execSync('sudo modprobe uvcvideo')
+}
+export const turnOffWebcam = () => {
+    execSync('sudo modprobe -r uvcvideo')
+}
