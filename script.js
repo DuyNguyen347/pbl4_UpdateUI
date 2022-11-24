@@ -1,4 +1,4 @@
-import { checkLogin, getStateAirplaneMode, getStateBluetooth, getStateNightLight, getStateWifi, getValueBright, getValueVolume, login, setValueBright, setValueVolum, turnOffBluetooth, turnOffNightLight, turnOffWifi, turnOnAirplaneMode, turnOnBluetooth, turnOnNightLight, turnOnWifi } from './execshell.js';
+import {turnOffWebcam,turnOnWebcam,getStateWebcam,openSetting,turnOffDoNotDisturb,turnOnDoNotDisturb,getStateDoNotDisturb,restart,turnOff,suspend,lockScreen,turnOffTouchpad,turnOnTouchpad,getStateTouchpad,toggleMicro,getStateMicro, checkLogin, getStateAirplaneMode, getStateBluetooth, getStateNightLight, getStateWifi, getValueBright, getValueVolume, login, setValueBright, setValueVolum, turnOffBluetooth, turnOffNightLight, turnOffWifi, turnOnAirplaneMode, turnOnBluetooth, turnOnNightLight, turnOnWifi } from './execshell.js';
 const volume = document.getElementById("volume");
 const wifiCheckbox = document.getElementById("wifiCheckbox");
 const wifiButton = document.getElementById("wifiButton");
@@ -104,25 +104,28 @@ bluetoothCheckbox.onchange = () => {
     bluetoothButton.classList.remove("none-active");
     var img = bluetoothButton.getElementsByClassName("img")[0];
     img.setAttribute("src","./img/bluetooth_white.png");
-    turnOnBluetooth();
   }
   else{
     bluetoothButton.classList.add("none-active");
     var img = bluetoothButton.getElementsByClassName("img")[0];
     img.setAttribute("src","./img/bluetooth-off.png");
-    turnOffBluetooth();
   }
 }
 bluetoothButton.onclick = function(){
   bluetoothCheckbox.checked = !bluetoothCheckbox.checked;
   bluetoothCheckbox.onchange();
+  if(bluetoothCheckbox.checked == true){
+    turnOnBluetooth();
+  }
+  else{
+    turnOffBluetooth();
+  }
 }
 airplaneCheckbox.onchange = () => {
   if(airplaneCheckbox.checked == true){
     airplaneButton.classList.remove("none-active");
     var img = airplaneButton.getElementsByClassName("img")[0];
     img.setAttribute("src","./img/airplane_white.png");
-    turnOnAirplaneMode();
   }
   else{
     airplaneButton.classList.add("none-active");
@@ -134,27 +137,29 @@ airplaneCheckbox.onchange = () => {
 airplaneButton.onclick = function(){
   airplaneCheckbox.checked = !airplaneCheckbox.checked;
   airplaneCheckbox.onchange();
+  if(airplaneCheckbox.checked == true) turnOnAirplaneMode();
 }
 nightLightCheckbox.onchange = () => {
   if(nightLightCheckbox.checked == true){
     nightLightButton.classList.remove("none-active");
     var img = nightLightButton.getElementsByClassName("img")[0];
     img.setAttribute("src","./img/night_white.png");
-    turnOnNightLight();
   }
   else{
     nightLightButton.classList.add("none-active");
     var img = nightLightButton.getElementsByClassName("img")[0];
     img.setAttribute("src","./img/night-off.png");
-    turnOffNightLight();
   }
 }
 nightLightButton.onclick = function(){
   nightLightCheckbox.checked = !nightLightCheckbox.checked;
   nightLightCheckbox.onchange();
+  if(nightLightCheckbox.checked == true){
+    turnOnNightLight();
+  }
+  else turnOffNightLight();
 }
-webcamButton.onclick = function(){
-  webcamCheckbox.checked = !webcamCheckbox.checked;
+webcamCheckbox.onchange = function(){
   if(webcamCheckbox.checked == true){
     webcamButton.classList.remove("none-active");
     var img = webcamButton.getElementsByClassName("img")[0];
@@ -166,8 +171,15 @@ webcamButton.onclick = function(){
     img.setAttribute("src","./img/webcam-off.png");
   }
 }
-microButton.onclick = function(){
-  microCheckbox.checked = !microCheckbox.checked;
+webcamButton.onclick = function(){
+  webcamCheckbox.checked = !webcamCheckbox.checked;
+  webcamCheckbox.onchange();
+  if(webcamCheckbox.checked == true ) {
+    turnOnWebcam();
+  }
+  else turnOffWebcam();
+}
+microCheckbox.onchange = function(){
   if(microCheckbox.checked == true){
     microButton.classList.remove("none-active");
     var img = microButton.getElementsByClassName("img")[0];
@@ -179,8 +191,12 @@ microButton.onclick = function(){
     img.setAttribute("src","./img/micro-off.png");
   }
 }
-touchpadButton.onclick = function(){
-  touchpadCheckbox.checked = !touchpadCheckbox.checked;
+microButton.onclick = function(){
+  microCheckbox.checked = !microCheckbox.checked;
+  microCheckbox.onchange();
+  toggleMicro();
+}
+touchpadCheckbox.onchange = function(){
   if(touchpadCheckbox.checked == true){
     touchpadButton.classList.remove("none-active");
     var img = touchpadButton.getElementsByClassName("img")[0];
@@ -192,8 +208,15 @@ touchpadButton.onclick = function(){
     img.setAttribute("src","./img/touchpad-off.png");
   }
 }
-keyboardButton.onclick = function(){
-  keyboardCheckbox.checked = !keyboardCheckbox.checked;
+touchpadButton.onclick = function(){
+  touchpadCheckbox.checked = !touchpadCheckbox.checked;
+  touchpadCheckbox.onchange();
+  if(touchpadCheckbox.checked == true){
+    turnOnTouchpad();
+  }
+  else turnOffTouchpad();
+}
+keyboardCheckbox.onchange = function(){
   if(keyboardCheckbox.checked == true){
     keyboardButton.classList.remove("none-active");
     var img = keyboardButton.getElementsByClassName("img")[0];
@@ -205,8 +228,14 @@ keyboardButton.onclick = function(){
     img.setAttribute("src","./img/keyboard-off.png");
   }
 }
-doNotDisturbButton.onclick = function(){
-  doNotDisturbCheckbox.checked = !doNotDisturbCheckbox.checked;
+keyboardButton.onclick = function(){
+  keyboardCheckbox.checked = !keyboardCheckbox.checked;
+  keyboardCheckbox.onchange();
+  if(keyboardCheckbox.checked == true){
+    // add code 
+  }
+}
+doNotDisturbCheckbox.onchange = function(){
   if(doNotDisturbCheckbox.checked == true){
     doNotDisturbButton.classList.remove("none-active");
     var img = doNotDisturbButton.getElementsByClassName("img")[0];
@@ -217,6 +246,14 @@ doNotDisturbButton.onclick = function(){
     var img = doNotDisturbButton.getElementsByClassName("img")[0];
     img.setAttribute("src","./img/notification-off.png");
   }
+}
+doNotDisturbButton.onclick = function(){
+  doNotDisturbCheckbox.checked = !doNotDisturbCheckbox.checked;
+  doNotDisturbCheckbox.onchange();
+  if(doNotDisturbCheckbox.checked == true){
+    turnOnDoNotDisturb();
+  }
+  else turnOffDoNotDisturb();
 }
 BtnCancel.onclick = function () { 
   window.closeWindow();
@@ -250,7 +287,10 @@ async function demo() {
     wifiCheckbox.checked = await getStateWifi();
     airplaneCheckbox.checked = await getStateAirplaneMode();
     nightLightCheckbox.checked = await getStateNightLight();
-    
+    webcamCheckbox.checked = await getStateWebcam();
+    microCheckbox.checked = await getStateMicro();
+    touchpadCheckbox.checked = await getStateTouchpad();
+    doNotDisturbCheckbox.checked = await getStateDoNotDisturb();
     // set
     await brightness.oninput();
     await volume.oninput();
@@ -258,7 +298,10 @@ async function demo() {
     await wifiCheckbox.onchange();
     await airplaneCheckbox.onchange();
     await nightLightCheckbox.onchange();
-
+    await webcamCheckbox.onchange();
+    await microCheckbox.onchange();
+    await touchpadCheckbox.onchange();
+    await doNotDisturbCheckbox.onchange();
     await sleep(5);
     }
 }
