@@ -23,6 +23,7 @@ const password = document.getElementById("password");
 const BtnLogin = document.getElementById("button-submit");
 const BtnCancel = document.getElementById("button-cancel");
 const BtnExit = document.getElementById("btn-exit");
+const Spinner = document.getElementById("spinner");
 const formLogin = document.getElementsByClassName("containner-login")[0];
   volume.oninput = ()=>{  
     if(volume.value>=90){
@@ -224,11 +225,20 @@ BtnCancel.onclick = function () {
 BtnExit.onclick = function () {
   window.closeWindow();
 }
-BtnLogin.onclick = function(){
+function viewSpinner(ms) {
+  Spinner.classList.remove("hide");
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+BtnLogin.onclick = async function () {
+  await viewSpinner(10);
   login(password.value);
   if (checkLogin()) {
     formLogin.classList.add("hide");
+    Spinner.classList.add("hide");
     demo();
+  } else {
+    Spinner.classList.add("hide");
+    password.value = "";
   }
 }
 
@@ -262,3 +272,5 @@ async function demo() {
     await sleep(5);
     }
 }
+
+
